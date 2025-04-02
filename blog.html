@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclipse Imagery Photography - Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            margin: 0;
+            overflow-x: hidden;
+        }
+        #threejs-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <nav class="fixed w-full z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-2xl font-bold">Eclipse Imagery Photography</div>
+            <div class="space-x-6">
+                <a href="index.html" class="hover:text-gray-600">Home</a>
+                <a href="portfolio.html" class="hover:text-gray-600">Portfolio</a>
+                <a href="aboutmepage.html" class="hover:text-gray-600">About</a>
+                <a href="contact.html" class="hover:text-gray-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <canvas id="threejs-background"></canvas>
+
+    <section class="container mx-auto px-4 pt-24 relative z-10">
+        <h1 class="text-4xl font-bold mb-8 text-center">Photography Blog</h1>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <article class="bg-white/70 backdrop-blur-lg shadow-lg rounded-lg overflow-hidden">
+                <img src="C:\Users\61200\OneDrive\Desktop\portfolio\photos\bl1.jpg" alt="Blog Post 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-semibold mb-2">Landscape Photography Techniques</h2>
+                    <p class="text-gray-600 mb-4">Discover advanced techniques for capturing breathtaking landscapes, from composition to lighting.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Published: March 15, 2024</span>
+                        <a href="#" class="text-blue-600 hover:underline">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white/70 backdrop-blur-lg shadow-lg rounded-lg overflow-hidden">
+                <img src="C:\Users\61200\OneDrive\Desktop\portfolio\photos\st1.jpg" alt="Blog Post 2" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-semibold mb-2">Street Photography: Capturing Moments</h2>
+                    <p class="text-gray-600 mb-4">Learn how to tell stories through candid street photography and overcome common challenges.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Published: February 28, 2024</span>
+                        <a href="#" class="text-blue-600 hover:underline">Read More</a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="bg-white/70 backdrop-blur-lg shadow-lg rounded-lg overflow-hidden">
+                <img src="C:\Users\61200\OneDrive\Desktop\portfolio\photos\pt1.jpg" alt="Blog Post 3" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-2xl font-semibold mb-2">Portrait Lighting Masterclass</h2>
+                    <p class="text-gray-600 mb-4">Explore professional lighting techniques to elevate your portrait photography.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">Published: January 10, 2024</span>
+                        <a href="#" class="text-blue-600 hover:underline">Read More</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</body>
+</html>

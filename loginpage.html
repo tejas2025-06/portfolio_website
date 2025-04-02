@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclipse Imagery - Login</title>
+    <link href="./dist/output.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #threejs-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: #ffffff;
+        }
+        .translucent-container {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 w-full z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <img src="C:\Users\61200\OneDrive\Desktop\portfolio\photos\images.png" alt="Company Logo" class="h-10 w-10 object-contain">
+                <span class="text-2xl font-bold">Eclipse Imagery Photography</span>
+            </div>
+            <a href="index.html" class="hover:text-gray-600">Home</a>
+        </div>
+    </nav>
+    <!-- Three.js Background Canvas -->
+    <canvas id="threejs-background"></canvas>
+
+    <div class="translucent-container p-10 rounded-3xl shadow-2xl w-120 relative z-10 transform hover:scale-105 transition duration-300 mt-20">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800">Eclipse Imagery</h1>
+            <p class="text-gray-600 mt-2">Login</p>
+        </div>
+        <form id="login-form" class="space-y-6" onsubmit="validateLogin(event)">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <input type="text" id="username" name="username" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 transform hover:scale-105" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input type="password" id="password" name="password" class="w-full px-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 transform hover:scale-105" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105">Login</button>
+            <p id="login-error" class="text-red-500 text-center hidden">Invalid credentials</p>
+        </form>
+    </div>
+
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('login-error');
+
+            if (username === 'photographer' && password === '123') {
+                window.location.href = 'photographerdashboard.html';
+            } else {
+                error.classList.remove('hidden');
+            }
+        }
+    </script>
+   <!-- Three.js Background Animation -->
+   <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-background'), alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Add shapes
+    const geometries = [
+        new THREE.SphereGeometry(1, 32, 32),
+        new THREE.BoxGeometry(1, 1, 1),
+        new THREE.ConeGeometry(1, 2, 32)
+    ];
+
+    const shapes = [];
+    for (let i = 0; i < 50; i++) {
+        const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+        const material = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(Math.random(), Math.random(), Math.random()),
+            wireframe: true
+        });
+        const shape = new THREE.Mesh(geometry, material);
+
+        shape.position.set(
+            Math.random() * 30 - 15,
+            Math.random() * 20 - 10,
+            Math.random() * -60 - 10
+        );
+
+        scene.add(shape);
+        shapes.push(shape);
+    }
+
+    camera.position.z = 5;
+
+    // Animation Loop
+    function animate() {
+        requestAnimationFrame(animate);
+        shapes.forEach((shape, index) => {
+            shape.rotation.x += 0.005 * (index % 2 === 0 ? 1 : -1);
+            shape.rotation.y += 0.005 * (index % 2 === 0 ? -1 : 1);
+        });
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Responsive Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclipse Imagery Photography - Home</title>
+    <link href="./dist/output.css" rel="stylesheet"> <!-- Link to compiled Tailwind CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow: hidden; /* Prevents scrolling */
+        }
+        #threejs-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none; /* Prevents interaction issues */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Three.js Fullscreen Background -->
+    <canvas id="threejs-background"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo and Company Name -->
+            <div class="flex items-center space-x-2">
+                <img src="C:\Users\61200\OneDrive\Desktop\portfolio\photos\images.png" alt="Company Logo" class="h-10 w-10 object-contain">
+                <span class="text-2xl font-bold">Eclipse Imagery Photography</span>
+            </div>
+            <!-- Navigation Links -->
+            <div class="space-x-6">
+                <a href="portfolio.html" class="hover:text-gray-600">Portfolio</a>
+                <a href="aboutmepage.html" class="hover:text-gray-600">About</a>
+                <a href="blog.html" class="hover:text-gray-600">Blog</a>
+                <a href="contact.html" class="hover:text-gray-600">Contact</a>
+                <a href="loginpage.html" class="hover:text-gray-600">login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page Content -->
+    <div class="container mx-auto px-4 pt-32 relative z-10 flex items-center justify-center min-h-screen">
+        <div class="text-center bg-white bg-opacity-50 backdrop-blur-md p-8 rounded-lg shadow-lg">
+            <h1 class="text-6xl font-bold mb-4 text-gray-900">Eclipse Imagery Photography</h1>
+            <p class="text-2xl mb-8 text-gray-700">Capturing Moments, Telling Stories</p>
+            <div class="space-x-4">
+                <a href="portfolio.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300">
+                    View Portfolio
+                </a>
+                <a href="contact.html" class="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 transition duration-300">
+                    Hire Me
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js Background Animation -->
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-background'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Add shapes
+        const geometries = [
+            new THREE.SphereGeometry(1, 32, 32),
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.ConeGeometry(1, 2, 32)
+        ];
+
+        const shapes = [];
+        for (let i = 0; i < 50; i++) {
+            const geometry = geometries[Math.floor(Math.random() * geometries.length)];
+            const material = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(Math.random(), Math.random(), Math.random()),
+                wireframe: true
+            });
+            const shape = new THREE.Mesh(geometry, material);
+
+            shape.position.set(
+                Math.random() * 30 - 15,
+                Math.random() * 20 - 10,
+                Math.random() * -60 - 10
+            );
+
+            scene.add(shape);
+            shapes.push(shape);
+        }
+
+        camera.position.z = 5;
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            shapes.forEach((shape, index) => {
+                shape.rotation.x += 0.005 * (index % 2 === 0 ? 1 : -1);
+                shape.rotation.y += 0.005 * (index % 2 === 0 ? -1 : 1);
+            });
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsive Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
